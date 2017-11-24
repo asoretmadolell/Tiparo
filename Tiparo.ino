@@ -11,9 +11,12 @@
 
 #include <Servo.h>
 
-Servo servoX;
-Servo servoY;
-Servo servoZ;
+Servo servoX, servoY, servoZ;
+
+int joyStickX = 0;
+int joyStickY = 1;
+
+int initialPos = 90;
 
 /*****************************************************************************/
 /*                                                                           */
@@ -22,8 +25,13 @@ Servo servoZ;
 /*****************************************************************************/
 void setup()
 {
+    Serial.begin( 9600 );
+  
     servoX.attach( 6 );
     servoY.attach( 7 );
+
+    servoX.write( initialPos );
+    servoY.write( initialPos );
 }
 
 /*****************************************************************************/
@@ -33,7 +41,22 @@ void setup()
 /*****************************************************************************/
 void loop()
 {
-    testServos();
+    //testServos();
+
+    int x, y;
+    int xPos, yPos;
+    
+    xPos = analogRead( joyStickX );
+    yPos = analogRead( joyStickY );
+    x = map( xPos, 0, 1023, 0, 180 );
+    y = map( yPos, 0, 1023, 0, 180 );
+    Serial.print( x, DEC );
+    Serial.print( "," );
+    Serial.print( y, DEC );
+    Serial.print( "\n" );
+    servoX.write( x );
+    servoY.write( y );
+    delay( 15 );
 }
 
 /*****************************************************************************/
