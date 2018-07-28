@@ -13,8 +13,9 @@
 
 Servo servoX, servoY, servoZ;
 
-int joyStickX = 0;
-int joyStickY = 1;
+int accelX = 0, accelY = 1, accelZ = 2;
+int xPos, yPos, zPos;
+int x, y, z;
 
 int initialPos = 90;
 
@@ -42,21 +43,21 @@ void setup()
 void loop()
 {
     //testServos();
-
-    int x, y;
-    int xPos, yPos;
     
-    xPos = analogRead( joyStickX );
-    yPos = analogRead( joyStickY );
-    x = map( xPos, 0, 1023, 0, 180 );
-    y = map( yPos, 0, 1023, 0, 180 );
-    Serial.print( x, DEC );
+    xPos = analogRead( accelX );
+    yPos = analogRead( accelY );
+    zPos = analogRead( accelZ );
+    x = map( xPos, 260, 400, 0, 180 );
+    y = map( yPos, 260, 400, 0, 180 );
+    Serial.print( xPos, DEC );
     Serial.print( "," );
-    Serial.print( y, DEC );
+    Serial.print( yPos, DEC );
+    Serial.print( "," );
+    Serial.print( zPos, DEC );
     Serial.print( "\n" );
-    servoX.write( x );
+    servoX.write( x );  
     servoY.write( y );
-    delay( 15 );
+    delay( 150 );
 }
 
 /*****************************************************************************/
