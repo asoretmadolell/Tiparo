@@ -11,6 +11,7 @@
 #include "Arduino.h"
 
 #include <Wire.h>
+#include <Servo.h>
 
 /*****************************************************************************/
 /*                                                                           */
@@ -56,9 +57,9 @@ unsigned char buttonHistory = 0;
 
 int test = 0;
 
-//Servo horizontalServo;
-//Servo verticalServo;
-//Servo sideTiltServo;
+Servo horizontalServo;
+Servo verticalServo;
+Servo sideTiltServo;
 
 /*****************************************************************************/
 /*                                                                           */
@@ -146,14 +147,14 @@ void gyroSetup()
     pinMode( 13, OUTPUT );
     digitalWrite( 13, LOW );
 
-    //horizontalServo.attach( 7 );
-    //horizontalServo.write( horizontalPosition );
+    horizontalServo.attach( 7 );
+    horizontalServo.write( horizontalPosition );
     delay( 15 );
-    //verticalServo.attach( 6 );
-    //verticalServo.write( verticalPosition );
+    verticalServo.attach( 6 );
+    verticalServo.write( verticalPosition );
     delay( 15 );
-    //sideTiltServo.attach( 5 );
-    //sideTiltServo.write( sideTiltPosition );
+    sideTiltServo.attach( 5 );
+    sideTiltServo.write( sideTiltPosition );
     delay( 15 );
 
     Serial.println( "Initializing Gyroscope..." );
@@ -203,11 +204,11 @@ void headTracking()
             test = 1;
 
             sideTiltPosition = 90;
-            //sideTiltServo.write( sideTiltPosition );
+            sideTiltServo.write( sideTiltPosition );
             verticalPosition = 90;
-            //verticalServo.write( verticalPosition );
+            verticalServo.write( verticalPosition );
             horizontalPosition = 90;
-            //horizontalServo.write( horizontalPosition );
+            horizontalServo.write( horizontalPosition );
         }
     }
 
@@ -254,8 +255,7 @@ void headTracking()
 
         if( ( sideTiltPosition <= 180 ) && ( sideTiltPosition >= 0 ) )
         {
-            //sideTiltServo.write( sideTiltPosition );
-            Serial.print( sideTiltPosition );
+            sideTiltServo.write( sideTiltPosition );
         }
         else if( sideTiltPosition > 180 )
         {
@@ -272,8 +272,7 @@ void headTracking()
 
         if( ( verticalPosition <= 180 ) && ( verticalPosition >= 0 ) )
         {
-            //verticalServo.write( verticalPosition );
-            Serial.print( verticalPosition );
+            verticalServo.write( verticalPosition );
         }
         else if( verticalPosition > 180 )
         {
@@ -290,8 +289,7 @@ void headTracking()
 
         if( ( horizontalPosition <= 180 ) && ( horizontalPosition >= 0 ) )
         {
-            //horizontalServo.write( horizontalPosition );
-            Serial.println( horizontalPosition );
+            horizontalServo.write( horizontalPosition );
         }
         else if( horizontalPosition > 180 )
         {
